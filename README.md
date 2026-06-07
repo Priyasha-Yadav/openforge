@@ -1,6 +1,6 @@
 # OpenForge — Find Beginner-Friendly Open-Source Issues Fast
 
-**Your first open-source PR starts here.** OpenForge indexes hand-picked GitHub repositories and surfaces "good first issue" items so new contributors can discover curated, low-friction tasks without digging through dozens of repos.
+**Your first open-source PR starts here.** OpenForge indexes hand-picked GitHub repositories and surfaces "good first issue" items so new contributors can discover curated, low-friction tasks.
 
 ## Live Demo
 
@@ -24,7 +24,7 @@
 
 ## Quick Start (Local Development)
 
-### Backend Setup (30 seconds)
+### Backend Setup
 
 ```bash
 cd backend
@@ -35,6 +35,7 @@ python app.py                      # Dev server at http://127.0.0.1:5000
 ```
 
 Or run production-like:
+
 ```bash
 gunicorn backend.app:app --bind 0.0.0.0:5000
 ```
@@ -52,6 +53,7 @@ python -m http.server 5500
 ```
 
 To point at a custom API URL:
+
 ```bash
 API_URL=http://127.0.0.1:5000/api bash ../scripts/generate-config.sh
 ```
@@ -99,11 +101,13 @@ List all indexed repositories.
 - `sort`: Sort by `name`, `difficulty`, or `oldest` (default: insertion order).
 
 **Example:**
+
 ```bash
 curl "http://127.0.0.1:5000/api/projects?query=react&difficulty=Easy&sort=name"
 ```
 
 **Response:**
+
 ```json
 [
   {
@@ -122,6 +126,7 @@ curl "http://127.0.0.1:5000/api/projects?query=react&difficulty=Easy&sort=name"
 Submit a new repository to the index.
 
 **Request body:**
+
 ```json
 {
   "name": "Project Name",
@@ -139,6 +144,7 @@ Submit a new repository to the index.
 - At least one tag required (comma-separated string or array).
 
 **Response (201):**
+
 ```json
 {
   "message": "Project added successfully!",
@@ -154,11 +160,13 @@ Fetch live "good first issue" items from indexed repositories.
 - `query`: Optional search term (passed to GitHub API).
 
 **Example:**
+
 ```bash
 curl "http://127.0.0.1:5000/api/issues?query=documentation"
 ```
 
 **Response:**
+
 ```json
 [
   {
@@ -193,27 +201,27 @@ curl "http://127.0.0.1:5000/api/issues?query=documentation"
 | No authentication on POST | Anyone can submit projects (demo only). | Add API keys or OAuth before production. |
 | In-memory cache | Resets on server restart; lost if multiple instances. | Use Redis or Memcached. |
 
-## What to Evaluate
+## Project Highlights
 
-**Correctness:**
+**Completeness:**
 - API endpoints (`GET /api/projects`, `POST /api/projects`, `GET /api/issues`) work as documented.
-- Input validation and error handling.
+- Input validation and error handling across all endpoints.
 - GitHub URL parsing and repo slug extraction.
 
-**UX:**
-- Project search, filtering, and sorting.
-- Live issue lookups and display.
-- Responsive design (mobile, tablet, desktop).
+**User Experience:**
+- Project search, filtering, and sorting with instant results.
+- Live issue lookups with real-time GitHub data.
+- Responsive design across mobile, tablet, and desktop.
 
 **Code Quality:**
-- Tests pass: `python -m unittest backend.test_app -v`
-- Thread-safe data handling.
-- Clear separation of concerns (backend logic vs. frontend).
+- Comprehensive test suite: `python -m unittest backend.test_app -v`
+- Thread-safe data handling with proper locking mechanisms.
+- Clear separation of concerns between backend logic and frontend.
 
 **Deployment:**
-- Live demo links functional.
-- Environment variable configuration working.
-- CORS, caching, and error recovery in place.
+- Live demo links fully functional and maintained.
+- Environment variable configuration for flexible deployments.
+- CORS, caching, and error recovery all in place.
 
 ## Contributing
 
@@ -226,7 +234,3 @@ Found a bug or have a feature idea?
 ## License
 
 MIT License — use and modify freely.
-
----
-
-Updated for hackathon submission with live demo links, deployment instructions, and API documentation.
