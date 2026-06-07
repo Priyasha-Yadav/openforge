@@ -110,6 +110,14 @@ Example: `GET /api/projects?query=react&difficulty=Hard&sort=name`
 - `backend/.env.example` contains the recommended env variables.
 - `GITHUB_TOKEN` (optional): add to `backend/.env` to increase GitHub API rate limits.
 
+### Frontend API configuration
+If you host the frontend separately from the backend, you can override the API endpoint by adding a small script tag before `app.js` in the HTML pages:
+
+```html
+<script>window.OPENFORGE_API_URL = 'https://your-backend.example.com/api'</script>
+<script src="app.js"></script>
+```
+
 ## Running Tests
 Run the unit tests (backend):
 

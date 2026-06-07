@@ -11,6 +11,7 @@
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
+    <!-- 1. THE NAVIGATION BAR (Restored to the very top) -->
     <nav class="site-nav" aria-label="Main navigation">
         <div class="nav-container">
             <a href="index.html" class="logo">
@@ -35,27 +36,37 @@
         </div>
     </nav>
 
+    <!-- 2. THE MAIN HERO SECTION -->
     <main id="main-content" class="container hero">
+        
+        <!-- Hero Content (Centered Text & Search) -->
         <div class="hero-content">
-            <span class="eyebrow">Discover open source faster</span>
-            <h1>Find your first contribution with less friction.</h1>
-            <p>Browse beginner-friendly projects, explore curated issues, and share repositories that need contributors.</p>
+            <a href="explore.html" class="hero-badge">
+                <span class="badge-dot"></span>
+                Now indexing 500+ beginner issues
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
 
-            <div class="search-wrapper" role="search" aria-label="Search projects">
-                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <h1>Your first open-source PR starts here.</h1>
+            <p>Search hand-picked, beginner-friendly projects and live issues.</p>
+
+            <div class="search-wrapper hero-search-wrapper" role="search" aria-label="Search projects">
+                <svg class="search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
-                <input type="search" class="search-bar" id="hero-search" placeholder="Search projects, tags, or languages..." aria-label="Search projects, tags, or languages">
-                <button class="btn btn-primary btn-search" type="button">Search</button>
+                <input type="search" class="search-bar" id="hero-search" placeholder="Search React, Python, or 'Good First Issue'..." aria-label="Search projects">
             </div>
 
-            <div class="hero-actions">
-                <a href="explore.html" class="btn btn-primary">Start Exploring</a>
-                <a href="issues.html" class="btn btn-secondary">View Issues</a>
+            <div class="hero-quick-links">
+                <span class="text-soft">Popular:</span>
+                <a href="explore.html?query=frontend" class="tag">Frontend</a>
+                <a href="explore.html?query=python" class="tag">Python</a>
+                <a href="issues.html" class="tag">Beginner Issues</a>
             </div>
         </div>
 
+        <!-- 3. THE STATS CARDS (Restored classes for cards and colors) -->
         <div class="hero-stats" aria-label="OpenForge highlights">
             <div class="stat">
                 <div class="stat-icon bg-blue" aria-hidden="true">
@@ -96,6 +107,7 @@
         </div>
     </main>
 
+    <!-- 4. THE FOOTER -->
     <footer class="site-footer">
         <div class="footer-container">
             <span class="footer-brand">OpenForge</span>
