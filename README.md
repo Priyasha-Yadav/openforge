@@ -21,15 +21,19 @@
 
 ### Home Page — Your First Open-Source PR Starts Here
 The landing page highlights OpenForge's mission with a hero banner, showing "Now indexing 500+ beginner issues" and search functionality.
+<img width="1887" height="882" alt="screenshot-1780851625659" src="https://github.com/user-attachments/assets/cb90de2a-ecdf-42f4-b07e-148b6ee36b59" />
 
 ### Explore Open Source Projects
 Browse curated projects with filtering by technology, difficulty level, and sorting options. Each project card displays difficulty badges and project descriptions.
+<img width="1885" height="882" alt="screenshot-1780851687793" src="https://github.com/user-attachments/assets/5b813889-3cb0-4e34-801b-9f155f8658e2" />
 
 ### Beginner-Friendly Issues
 Search and filter "good first issue" opportunities pulled directly from OpenForge repositories. Results are cached for performance with refresh controls.
+<img width="1884" height="882" alt="screenshot-1780851715254" src="https://github.com/user-attachments/assets/66ee9f43-2486-4259-a1b8-6ca6ae50997f" />
 
 ### Submit a Project
 Community members can easily add their repositories to OpenForge to help beginners discover them. Simple form for project name, description, GitHub URL, tags, and difficulty level.
+<img width="1883" height="882" alt="screenshot-1780851746508" src="https://github.com/user-attachments/assets/e595293f-73f5-4994-91f7-86088c1dddd7" />
 
 ## Tech Stack
 
