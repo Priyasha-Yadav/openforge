@@ -1,12 +1,12 @@
-# OpenForge — Find Beginner-Friendly Open-Source Issues Fast
+# 🚀 OpenForge — Your First Open-Source PR in Minutes
 
-**Your first open-source PR starts here.** OpenForge surfaces hand-picked, beginner-friendly GitHub issues so new contributors can discover curated tasks without the noise.
+**Beginners shouldn't struggle to find their first open-source contribution.** OpenForge surfaces hand-picked, beginner-friendly GitHub issues in seconds—cutting discovery time from hours to minutes.
 
-## 🚀 Try It Now (30 seconds)
+## ⚡ Try It in 10 Seconds
 
 1. Open: **https://open-forge.netlify.app/**
 2. Search: `"react"` or `"vue"`
-3. Click a project → explore beginner issues
+3. Click a project → instantly explore beginner-friendly issues
 
 **Live endpoints:**
 - Frontend: https://open-forge.netlify.app/
@@ -14,15 +14,11 @@
 
 > **Note:** Backend runs on free tier. First request takes 20–40 seconds (cold start). Subsequent requests are instant.
 
-## Why OpenForge Exists
+## 💡 Why I Built This
 
-Finding your first open-source contribution is overwhelming:
+Finding my first open-source issue took hours of GitHub searching. Most beginners give up before their first PR.
 
-- ❌ GitHub search returns noise (thousands of random issues)
-- ❌ Filtering for "beginner-friendly" is manual and time-consuming
-- ❌ Most curated lists are stale or unmaintained
-
-**OpenForge solves this** by indexing 500+ hand-picked repositories and surfacing "good first issue" items in real-time with smart caching.
+OpenForge was built to solve that friction—indexing 500+ hand-picked repositories and surfacing real-time "good first issue" opportunities without the noise.
 
 ## ✨ What Makes It Different
 
