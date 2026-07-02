@@ -1005,6 +1005,64 @@ main {
     }
 }
 
+/* Compact/tablet adjustments to reduce visual bloat */
+@media (max-width: 1024px) {
+    .container {
+        padding: 1.5rem 4%;
+    }
+
+    .page-spacing {
+        padding-top: 4rem;
+        padding-bottom: 2.5rem;
+    }
+
+    .hero {
+        padding: 2.5rem 0 1.75rem;
+    }
+
+    .search-wrapper {
+        max-width: 520px;
+        padding-left: 1rem;
+        padding-right: 0.75rem;
+        min-height: 52px;
+    }
+
+    .grid, .projects-grid {
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+
+    .card { padding: 1rem; }
+    .card:hover { transform: none; box-shadow: var(--shadow-md); }
+
+    .btn { padding: 0.6rem 1rem; }
+
+    .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+}
+
+/* Ensure small screens stay compact and legible */
+@media (max-width: 520px) {
+    body::before { background-size: 48px 48px; opacity: 0.35; }
+
+    .nav-container { padding: 0.5rem 3%; }
+    .nav-btn { padding: 0.5rem 0.85rem; }
+
+    .hero h1 { font-size: 1.65rem; }
+
+    .search-wrapper { min-height: 44px; padding-left: 0.9rem; }
+
+    .card { padding: 0.85rem; border-radius: 10px; }
+    .card p { font-size: 0.95rem; }
+
+    .tag { font-size: 0.72rem; padding: 0.2rem 0.5rem; }
+    .badge, .difficulty { font-size: 0.66rem; padding: 0.24rem 0.5rem; }
+
+    .form-container { padding: 0.85rem; }
+    .form-group input, .form-group textarea, .form-group select { padding: 0.7rem 0.9rem; }
+
+    .custom-select-trigger { padding: 0.6rem 0.9rem; }
+}
+
 @media (max-width: 768px) {
     .hero h1 { font-size: 2.2rem; max-width: 28ch; }
     .hero p { font-size: 1rem; }
@@ -1051,6 +1109,64 @@ main {
         flex-direction: column;
         align-items: flex-start;
     }
+}
+
+/* Extra small devices: improve spacing, tap targets, and stacking */
+@media (max-width: 480px) {
+    .nav-container {
+        padding: 0.6rem 4%;
+    }
+
+    .logo {
+        font-size: 1.05rem;
+    }
+
+    .hero {
+        padding: 2rem 0 1.5rem;
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+        max-width: 36ch;
+    }
+
+    .hero p {
+        font-size: 0.98rem;
+        margin-bottom: 1rem;
+    }
+
+    .search-wrapper {
+        min-height: 48px;
+        padding-left: 1rem;
+        padding-right: 0.75rem;
+    }
+
+    .search-bar { font-size: 1rem; }
+
+    .btn { padding: 0.6rem 1rem; font-size: 0.95rem; }
+    .btn-icon { width: 40px; height: 40px; }
+
+    .card { padding: 1rem; }
+
+    .grid,
+    .projects-grid,
+    .hero-stats { grid-template-columns: 1fr; }
+
+    .form-container { padding: 1rem; }
+    .form-group input, .form-group textarea, .form-group select, .form-input {
+        padding: 0.8rem 0.9rem;
+        font-size: 0.98rem;
+    }
+
+    .filter-group { gap: 0.5rem; }
+    .filter-control { padding: 0.8rem 2.2rem 0.8rem 1rem; min-width: unset; }
+
+    .custom-select-trigger { padding: 0.7rem 1rem; }
+    .custom-select-options { top: calc(100% + 0.35rem); }
+
+    .controls-bar { gap: 0.6rem; }
+
+    .skip-link { left: 0.6rem; }
 }
 
 /* ============================================================
