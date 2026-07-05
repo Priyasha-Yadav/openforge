@@ -1,6 +1,11 @@
 // Allow overriding the API URL from the page (useful when frontend is hosted separately)
 const API_URL = window.OPENFORGE_API_URL || "https://openforge-48r0.onrender.com/api";
 
+// Global State for Issue Pagination
+let allIssues = [];
+let currentIssuePage = 1;
+const ISSUES_PER_PAGE = 12;
+
 document.addEventListener("DOMContentLoaded", () => {
     setupNavigation();
     setupProjectPage();
@@ -114,7 +119,10 @@ function setupProjectPage() {
     const sortFilter = document.getElementById("sort-filter");
     const resetButton = document.getElementById("reset-project-filters");
 
-    const triggerFetch = () => fetchProjects();
+    const triggerFetch = () => {
+  updateActiveFiltersSummary();
+  fetchProjects();
+};
     let debounceTimer;
 
     if (search) {
@@ -129,22 +137,31 @@ function setupProjectPage() {
     });
 
     if (resetButton) {
-        resetButton.addEventListener("click", () => {
-            if (search) search.value = "";
-            if (tagFilter) tagFilter.value = "";
-            if (difficultyFilter) difficultyFilter.value = "";
-            if (sortFilter) sortFilter.value = "";
-            fetchProjects();
-        });
+  resetButton.addEventListener("click", () => {
+    if (search) search.value = "";
+    if (tagFilter) tagFilter.value = "";
+    if (difficultyFilter) difficultyFilter.value = "";
+    if (sortFilter) sortFilter.value = "";
+
+    updateActiveFiltersSummary();
+
+    if (typeof setupCustomDropdowns === "function") {
+      setupCustomDropdowns();
     }
 
+    fetchProjects();
+  });
+}
+
     loadProjectFilters().then(() => {
-        const params = new URLSearchParams(window.location.search);
-        if (search && params.get("query")) {
-            search.value = params.get("query");
-        }
-        fetchProjects();
-    });
+  const params = new URLSearchParams(window.location.search);
+  if (search && params.get("query")) {
+    search.value = params.get("query");
+  }
+
+  updateActiveFiltersSummary();
+  fetchProjects();
+});
 }
 
 function setupIssuePage() {
@@ -189,6 +206,65 @@ function getProjectFilters() {
         difficulty: document.getElementById("difficulty-filter")?.value || "",
         sort: document.getElementById("sort-filter")?.value || "",
     };
+}
+
+function updateActiveFiltersSummary() {
+  const summaryContainer = document.getElementById("active-filters-list");
+  if (!summaryContainer) return;
+
+  const filters = getProjectFilters();
+  const activeFilters = [];
+
+  if (filters.query) {
+    activeFilters.push({
+      label: "Search",
+      value: filters.query,
+    });
+  }
+
+  if (filters.tag) {
+    activeFilters.push({
+      label: "Technology",
+      value: filters.tag,
+    });
+  }
+
+  if (filters.difficulty) {
+    activeFilters.push({
+      label: "Difficulty",
+      value: filters.difficulty,
+    });
+  }
+
+  if (filters.sort) {
+    const sortLabels = {
+      name: "Name (A-Z)",
+      difficulty: "Difficulty",
+      oldest: "Oldest",
+    };
+
+    activeFilters.push({
+      label: "Sort",
+      value: sortLabels[filters.sort] || filters.sort,
+    });
+  }
+
+  summaryContainer.innerHTML = "";
+
+  if (!activeFilters.length) {
+    const emptyChip = document.createElement("span");
+    emptyChip.className = "filter-chip";
+    emptyChip.textContent = "None";
+    summaryContainer.appendChild(emptyChip);
+    return;
+  }
+
+  activeFilters.forEach((filter) => {
+    const chip = document.createElement("span");
+    chip.className = "filter-chip";
+    chip.textContent = `${filter.label}: ${filter.value}`;
+    summaryContainer.appendChild(chip);
+  });
 }
 
 function setMessage(elementId, text, type) {
@@ -289,12 +365,14 @@ function renderProjects(projects) {
     });
 }
 
-function renderIssues(issues) {
+function renderIssues(issues, replace = true) {
     const container = document.getElementById("issues-container");
     if (!container) return;
 
     setContainerBusy(container, false);
-    container.innerHTML = '';
+    if (replace) {
+        container.innerHTML = '';
+    }
 
     issues.forEach(issue => {
         const article = document.createElement('article');
@@ -338,6 +416,40 @@ function renderIssues(issues) {
     });
 }
 
+function renderLoadMoreButton() {
+    const container = document.getElementById("issues-container");
+    if (!container) return;
+
+    // Remove existing if any
+    const existingBtn = document.getElementById("load-more-btn-container");
+    if (existingBtn) existingBtn.remove();
+
+    const endIdx = currentIssuePage * ISSUES_PER_PAGE;
+    if (endIdx < allIssues.length) {
+        const btnContainer = document.createElement("div");
+        btnContainer.className = "load-more-container";
+        btnContainer.id = "load-more-btn-container";
+        
+        const btn = document.createElement("button");
+        btn.className = "btn btn-primary load-more-btn";
+        btn.textContent = "Load More Issues";
+        btn.addEventListener("click", loadMoreIssues);
+        
+        btnContainer.appendChild(btn);
+        container.parentNode.insertBefore(btnContainer, container.nextSibling);
+    }
+}
+
+function loadMoreIssues() {
+    currentIssuePage++;
+    const startIdx = (currentIssuePage - 1) * ISSUES_PER_PAGE;
+    const endIdx = currentIssuePage * ISSUES_PER_PAGE;
+    const nextIssues = allIssues.slice(startIdx, endIdx);
+    
+    renderIssues(nextIssues, false);
+    renderLoadMoreButton();
+}
+
 function populateTagFilter(projects) {
     const tagFilter = document.getElementById("tag-filter");
     if (!tagFilter) return;
@@ -348,13 +460,20 @@ function populateTagFilter(projects) {
     });
 
     const selectedValue = tagFilter.value;
-    
-    let optionsHtml = `<option value="">All technologies</option>`;
+
+    tagFilter.innerHTML = '';
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = 'All technologies';
+    tagFilter.appendChild(defaultOption);
+
     Array.from(tags).sort((a, b) => a.localeCompare(b)).forEach((tag) => {
-        optionsHtml += `<option value="${tag}">${tag}</option>`;
+        const option = document.createElement('option');
+        option.value = tag;
+        option.textContent = tag;
+        tagFilter.appendChild(option);
     });
 
-    tagFilter.innerHTML = optionsHtml;
     tagFilter.value = selectedValue;
     // initialize custom dropdowns after the native select is populated
     if (typeof setupCustomDropdowns === 'function') {
@@ -525,10 +644,18 @@ async function fetchIssues() {
                     ? "Try a different search term or clear the filter."
                     : "Check back later or submit a project with open good-first issues.",
             });
+            // Also remove load more button if present
+            const existingBtn = document.getElementById("load-more-btn-container");
+            if (existingBtn) existingBtn.remove();
             return;
         }
 
-        renderIssues(payload);
+        allIssues = payload;
+        currentIssuePage = 1;
+        
+        const firstPage = allIssues.slice(0, ISSUES_PER_PAGE);
+        renderIssues(firstPage, true);
+        renderLoadMoreButton();
     } catch (error) {
         console.error("Error fetching issues:", error);
         renderStatusPanel(container, {
